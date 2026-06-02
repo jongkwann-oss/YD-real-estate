@@ -116,10 +116,10 @@ tr:nth-child(even) td { background: #0d0d17; }
 
 
 <!-- API 설정 패널 -->
-<div class="api-panel open" id="apiPanel">
+<div class="api-panel" id="apiPanel">
   <div class="api-title" onclick="this.parentElement.classList.toggle('open')">공공데이터 API 설정</div>
   <div class="api-body">
-    <input class="api-input" id="apiKey" type="text" placeholder="data.go.kr 인증키 (Encoding)" value="">
+    <input class="api-input" id="apiKey" type="text" placeholder="data.go.kr 인증키 (Encoding)" value="b54d36df816a130f9eb2ce28aca87cb6b2ab482d7adfbce33193873ce5c3c3e3">
     <div class="api-row">
       <label>조회 시작</label>
       <select id="apiStartYear"></select>
@@ -169,7 +169,7 @@ tr:nth-child(even) td { background: #0d0d17; }
   </div>
 </div>
 
-<div class="empty-state" id="emptyState"><div class="icon">📊</div><div class="msg">API 인증키를 입력하고 데이터를 가져오세요</div><div class="sub">국토교통부 아파트 매매 실거래가 상세 자료 API 사용</div></div>
+<div class="empty-state" id="emptyState"><div class="icon">⏳</div><div class="msg">데이터를 불러오는 중입니다...</div><div class="sub">국토교통부 아파트 매매 실거래가 API 연동</div></div>
 <div class="tabs" id="tabsSection" style="display:none">
   <button class="tab active" onclick="showTab('chart')">📈 추이</button>
   <button class="tab" onclick="showTab('stats')">📋 통계</button>
@@ -828,6 +828,13 @@ function renderCompare() {
 
 buildCmpBtns();
 if (RAW_DATA.length > 0) render();
+
+// 페이지 로드 시 자동으로 데이터 가져오기
+window.addEventListener("DOMContentLoaded", () => {
+  if (document.getElementById("apiKey").value.trim()) {
+    fetchAllData();
+  }
+});
 </script>
 </body>
 </html>
